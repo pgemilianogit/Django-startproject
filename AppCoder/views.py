@@ -35,3 +35,20 @@ def ver_cursos(request):
 #crear un diccionario con una sola propiedad (cursos) y el valor sera el conjunto de dicc
 #teniendo todos los cursos cargar la plantilla  get_template metodo del motor de plantillas apuntando en settings
 #render de la plantilla mandando el diccionario, pasa todo dinamismo, retorna todos los cursos
+
+def alumnos(request):
+    return render(request, "alumnos.html")
+
+def profesores(request):
+    return render(request, "profesores.html")
+
+
+
+def curso_formulario(request):
+
+    if request.method == "POST":
+        curso = Curso( nombre=request.POST["nombre"] , camada=request.POST["camada"])
+        curso.save()
+        return render(request , "formulario.html")
+
+    return render(request , "formulario.html")

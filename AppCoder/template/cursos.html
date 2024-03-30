@@ -3,26 +3,34 @@
 {% extends 'padre.html' %}
 {% load static %} <!-- cargar todos los doc static que necesite -->
 {% block contenido %} <!-- de block padre manda  -->
-    {% for n in cursos %}
-        <p>{{n.nombre}}</p>
-        <p>{{n.camada}}</p>
-    {% endfor %}
-    <table class="table">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>nombre</th>
-                <th>camada</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for n in cursos %}
-            <tr>
-                <th scope="row">{{n.id}}</th>
-                <td>{{n.nombre}}</td>
-                <td>{{n.camada}}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    <main class="Conteiner">
+        <h1 class ="text-center">Cursos</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>nombre</th>
+                    <th>camada</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in cursos %}
+                <tr>
+                    <th scope="row">{{n.id}}</th>
+                    <td>{{n.nombre}}</td>
+                    <td>{{n.camada}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 {% endblock %}
+
+<!-- URL.py
+    agregamos una nueva url, ver_cursos e invicava el view de cursos 
+    cuando entro ver la lista, y ver todos los datos de db para utilizar, una lista de cursos en un dicccionario
+    loader.template, definir el template y del archivo con el meotodo render para ver como esta estructurado todo desde django 
+    el template curso se trae todo en curso y lo inserta en padre con contenido dinamico, se inserta y se usa el for de cursos.html
+
+    rener hacer todo el proceso y genera un html static con todos los datos y ya teniendolos los usuario las llama-->

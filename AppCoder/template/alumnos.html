@@ -1,0 +1,61 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block contenido %}
+    <main>
+        <div class="Conteiner">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <img src="{% static 'AppCoder/assets/img/testimonials-1.jpg' %}"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Carmen Salinas</h5>
+                            <p class="card-text">Me gusto mucho el curso, muy completo</p>
+                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <img src="{% static 'AppCoder/assets/img/testimonials-2.jpg' %}"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Enrique Martin</h5>
+                            <p class="card-text">Excelente profe</p>
+                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div> 
+            <div class ="row">
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <img src="{% static 'AppCoder/assets/img/testimonials-2.jpg' %}"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Armando Cervantes</h5>
+                            <p class="card-text">Epa, me parezco al otro xd</p>
+                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <img src="{% static 'AppCoder/assets/img/testimonials-3.jpg' %}"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Karina Montoya</h5>
+                            <p class="card-text">Gran Temario, aprendo mucho</p>
+                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+{% endblock %}
