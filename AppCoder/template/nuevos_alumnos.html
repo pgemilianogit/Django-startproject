@@ -2,10 +2,10 @@
 {% load static %} 
 {% block contenido %} 
 
-    <form action="alta_curso" method="POST">
+    <form action="agregar_estudiante" method="POST">
         {% csrf_token %}
-        <p>Nombre:</p>
-        <input type="text" name="nombre" required>
+        <p>Nombre del Alumno:</p>
+        <input type="text" name="nombre_alumno" required>
         <p>ID de Curso</p>
         <input type="number" name="ID_curso" required>
         <button>Enviar</button>

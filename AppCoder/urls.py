@@ -9,6 +9,9 @@ urlpatterns= [      #name va relacionado con el padre para las direcciones
     path("profesores", views.profesores, name="profesores"),
     path("alta_curso", views.curso_formulario),
     path("buscar_curso",views.buscar_curso),
-    path("buscar", views.buscar)
-    
+    path("buscar", views.buscar),
+ 
+ #ALUMNOS Y PROFESORES
+    path("agregar_estudiante", views.nuevos_alumnos),
+    path("agregar_profesores", views.nuevos_profesores,)
 ]

@@ -3,6 +3,16 @@
 from django import forms
 
 class Curso_formulario(forms.Form):
+        
+        nombre = forms.CharField(max_length=30)
+        ID_curso = forms.IntegerField()
     
-    nombre = forms.CharField(max_length=30)
-    camada = forms.IntegerField()
+class Alumnos_formulario(forms.Form):
+    
+    nombre_alumno = forms.CharField(max_length=30)
+    curso_inscrito = forms.IntegerField()
+    
+class Profesores_formulario(forms.Form):
+    
+    nombre_profesor = forms.CharField(max_length=30)
+    curso_impartido = forms.IntegerField()
