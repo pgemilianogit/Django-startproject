@@ -111,3 +111,33 @@ def nuevos_profesores(request):
             return render(request , "nuevos_profesores.html")
         
     return render(request , "nuevos_profesores.html")
+
+#ELIMNAR CURSO
+def eliminar_curso(request,id):
+    curso=Curso.objects.get(id=id)
+    curso.delete()
+    curso=Curso.objects.all()
+    return render(request, "cursos.html", {"cursos":curso})
+
+#en la url llega el numero enfocada en la view, con get de la base de datos, elimina con delete en base de datos y obtieme la base de datos de nuevo renderizando con la base de datos
+
+#EDITAR UN CURSO
+#view tiene 2 comportamientos, cuando sea post y se redirecciona y cuando sea get y es cuando se clike editar, y genera un formulario, teniendo los valores iniciales llenando los datos con mi_formulario y haciendo un render con el template y mandar un diccionario con formulario y id
+
+def editar(request,id):
+    curso=Curso.objects.get(id=id)
+    if request.method == "POST":
+        mi_formulario=Curso_formulario(request.POST)
+        if mi_formulario.is_valid():
+            datos=mi_formulario.cleaned_data
+            curso.nombre=datos["nombre"]
+            curso.ID_curso=datos["ID_curso"]
+            curso.save()
+            
+            curso=Curso.objects.all()
+            return render(request, "cursos.html", {"cursos":curso})
+
+    else:
+        mi_formulario = Curso_formulario(initial={"nombre":curso.nombre, "ID":curso.ID_curso})
+        
+    return render(request, "editar_curso.html", {"mi_formulario":mi_formulario, "curso":curso})

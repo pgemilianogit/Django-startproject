@@ -5,7 +5,8 @@
 {% block contenido %} <!-- de block padre manda  -->
 
     <main class="Conteiner">
-        <h1 class ="text-center">Cursos</h1>
+        <h1 class ="text-xl-center title">Cursos</h1>
+        <a href="alta_curso"class="btn btn-primary btn-sm">Nuevo Curso</a>
         <table class="table">
             <thead>
                 <tr>
@@ -20,6 +21,9 @@
                     <th scope="row">{{n.id}}</th>
                     <td>{{n.nombre}}</td>
                     <td>{{n.ID_curso}}</td>
+                    <td><a href="{% url 'eliminar_curso' n.id %}"class="btn btn-danger" >Eliminar</a></td>
+                    <td><a href="{% url 'editar_curso' n.id %}" class="btn btn-warning" >Editar</a></td>
+
                 </tr>
                 {% endfor %}
             </tbody>
