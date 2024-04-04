@@ -17,4 +17,7 @@ urlpatterns= [      #name va relacionado con el padre para las direcciones
     
     path("eliminar_curso/<int:id>", views.eliminar_curso, name="eliminar_curso"),
     path("editar_curso/<int:id>", views.editar, name="editar_curso")
+    path("login", views.login_request, name="Login")
+    
+    
 ]

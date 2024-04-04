@@ -5,9 +5,9 @@ from AppCoder.models import Alumnos
 from AppCoder.models import Profesores
 from django.http import HttpResponse
 from django.template import loader
-from AppCoder.forms import Curso_formulario
-from AppCoder.forms import Alumnos_formulario
-from AppCoder.forms import Profesores_formulario
+from AppCoder.forms import Curso_formulario, Alumnos_formulario, Profesores_formulario
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import login, authenticate
 
 
 # Create my views here.
@@ -141,3 +141,15 @@ def editar(request,id):
         mi_formulario = Curso_formulario(initial={"nombre":curso.nombre, "ID":curso.ID_curso})
         
     return render(request, "editar_curso.html", {"mi_formulario":mi_formulario, "curso":curso})
+
+
+#LOGIN REQUEST
+#Generar una nueva url y con login, y la peticion ser a get y el if no se ejecutara habiendo validacion, y como se hatra get 
+#se hara un formulario para el usuario y hara un render para mostar el formulario y mandar template, y cargarlo desde padre
+
+def login_request(request):
+    if request.method == "POST":
+        pass
+    
+    form = AuthenticationForm()
+    return render(request, "login.html", {"form":form})
