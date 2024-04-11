@@ -21,8 +21,10 @@
                     <th scope="row">{{n.id}}</th>
                     <td>{{n.nombre}}</td>
                     <td>{{n.ID_curso}}</td>
+                    {% if request.user.is_authenticated %}
                     <td><a href="{% url 'eliminar_curso' n.id %}"class="btn btn-danger" >Eliminar</a></td>
                     <td><a href="{% url 'editar_curso' n.id %}" class="btn btn-warning" >Editar</a></td>
+                    {% endif %}
 
                 </tr>
                 {% endfor %}

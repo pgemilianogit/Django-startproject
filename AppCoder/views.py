@@ -1,15 +1,13 @@
 from django.shortcuts import render
 #Importando el modelo dar de alta uno nuevo importando la clase curso
-from AppCoder.models import Curso
-from AppCoder.models import Alumnos
-from AppCoder.models import Profesores
+from AppCoder.models import Curso, Avatar, Alumnos, Profesores
 from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import Curso_formulario, Alumnos_formulario, Profesores_formulario, UserEditForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import User
-
+#from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required   #views que se pueda ver al iniciar sesion
 
 # Create my views here.
 #4 Definir las views
@@ -29,7 +27,10 @@ def alta_curso(request, nombre):
     return HttpResponse(texto)
 
 #VER CURSOS
+@login_required
 def ver_cursos(request):
+    avatares = Avatar.objects.filter(user=request.user.id)
+    
     #Como ver la base de datos, return lista
     cursos = Curso.objects.all()
     dicc ={"cursos": cursos}
@@ -37,6 +38,7 @@ def ver_cursos(request):
     #Loader simpl todo el problema de como entrar al template, donde ya definimos
     documento=plantilla.render(dicc)
     return HttpResponse(documento)
+    
 
 #PROCESO:
 
@@ -46,16 +48,19 @@ def ver_cursos(request):
 
 #ALUMNOS
 def alumnos(request):
-    return render(request, "alumnos.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "alumnos.html", {"url":avatares[0].imagen.url,})
 
 
 #PROFESORES
 def profesores(request):
-    return render(request, "profesores.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "profesores.html", {"url":avatares[0].imagen.url,})
 
 
 #DAR DE ALTA UN CURSO  OCUPO ESTOOOOOOOOOOO
 def curso_formulario(request):
+    avatares = Avatar.objects.filter(user=request.user.id)
 
     if request.method == "POST":
 
@@ -67,11 +72,13 @@ def curso_formulario(request):
             return render(request , "formulario.html")
 
 
-    return render(request , "formulario.html")
+    return render(request , "formulario.html", {"url":avatares[0].imagen.url,})
 
 #BUSCAR UN CURSO
 def buscar_curso (request):
-    return render(request, "buscar_curso.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+
+    return render(request, "buscar_curso.html", {"url":avatares[0].imagen.url,})
 
 #BUSCAR
 def buscar(request):
@@ -85,7 +92,7 @@ def buscar(request):
     
 #FORMULARIO DE ALUMNOS
 def nuevos_alumnos(request):
-
+    avatares = Avatar.objects.filter(user=request.user.id)
     if request.method == "POST":
 
         formulario_al = Alumnos_formulario( request.POST )
@@ -95,13 +102,13 @@ def nuevos_alumnos(request):
             curso.save()
             return render(request , "nuevos_alumnos.html")
         
-    return render(request , "nuevos_alumnos.html")
+    return render(request , "nuevos_alumnos.html", {"url":avatares[0].imagen.url,})
 
 
 
 #FORMULARIO DE PROFESORES
 def nuevos_profesores(request):
-
+    avatares = Avatar.objects.filter(user=request.user.id)
     if request.method == "POST":
 
         formulario_prof = Profesores_formulario( request.POST )
@@ -111,7 +118,7 @@ def nuevos_profesores(request):
             curso.save()
             return render(request , "nuevos_profesores.html")
         
-    return render(request , "nuevos_profesores.html")
+    return render(request , "nuevos_profesores.html", {"url":avatares[0].imagen.url,})
 
 #ELIMNAR CURSO
 def eliminar_curso(request,id):
@@ -159,7 +166,8 @@ def login_request(request):
             
             if user is not None:
                 login(request, user)
-                return render(request, "inicio.html", {"mensaje":f"Bienvenido/a {usuario}"})
+                avatares = Avatar.objects.filter(user=request.user.id)
+                return render(request, "inicio.html", {"url":avatares[0].imagen.url,})
             else:
                 return HttpResponse(f"Usuario no encontrado")
         else:
@@ -171,6 +179,7 @@ def login_request(request):
 
 #REGISTRO
 def register(request):
+    
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         
@@ -185,6 +194,8 @@ def register(request):
 
 #EDITAR PERFIL
 def editar_perfil(request):
+    avatares = Avatar.objects.filter(user=request.user.id)
+
     usuario= request.user
     
     if request.method =="POST":
@@ -200,4 +211,4 @@ def editar_perfil(request):
     else:
         miFormulario = UserEditForm(initial={'email': usuario.email})
 
-    return render(request, "editar_perfil.html", {"miFormulario":miFormulario, "usuario": usuario})
+    return render(request, "editar_perfil.html", {"miFormulario" : miFormulario, "usuario" : usuario})

@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Curso
-from .models import Profesores
-from .models import Alumnos
+from .models import *
+
+admin.site.register(Avatar)
 # Register your models here.
 
 #Nombres con columna correspondiendte con hipervinculo
