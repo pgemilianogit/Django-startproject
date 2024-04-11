@@ -28,16 +28,17 @@ def alta_curso(request, nombre):
 
 #VER CURSOS
 @login_required
-def ver_cursos(request):
-    avatares = Avatar.objects.filter(user=request.user.id)
-    
+def ver_cursos(request): 
     #Como ver la base de datos, return lista
     cursos = Curso.objects.all()
-    dicc ={"cursos": cursos}
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "cursos.html", {"url":avatares[0].imagen.url, "cursos":cursos})
+
+    """dicc ={"cursos": cursos}
     plantilla = loader.get_template("cursos.html")
     #Loader simpl todo el problema de como entrar al template, donde ya definimos
     documento=plantilla.render(dicc)
-    return HttpResponse(documento)
+    return HttpResponse(documento)"""
     
 
 #PROCESO:
