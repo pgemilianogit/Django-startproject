@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-10 col-md-3">
                     <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/Ana.jpg' %}" class="card-img-top" alt="Foto de Ana Martínez García" style="width: 250px; height: auto;">
+                        <img src="{% static 'AppCoder/assets/img/Profesores/Ana.jpg' %}" class="card-img-top" alt="Foto de Ana Martínez García" style="width: 250px; height: auto;">
                         <div class="card-body">
                             <h5 class="card-title mb-0">Ana Martínez García</h5>
                             <p class="card-text text-muted mb-2">Ingeniera en Sistemas</p>
@@ -165,4 +165,27 @@
 
             </div>
         </div>
+        <!-- ------------------ CRUD PROFESORES ------------------ -->
+        <h1 class="text-xl-center title">Profesores</h1>
+        <a href="{% url 'AgregarProfesor' %}" class="btn btn-warning">Agregar Profesor</a>
+        <div class="row mt-3">
+            {% for profesor in profesores %}
+            <div class="col-12 col-md-6 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ profesor.nombre_profesor }}</h5>
+                        <p class="card-text"><strong>Curso Impartido:</strong> {{ profesor.curso_impartido }}</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="{% url 'editar_profesor' profesor.id %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'eliminar_profesor' profesor.id %}" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    
+    
+
+
 {% endblock %}

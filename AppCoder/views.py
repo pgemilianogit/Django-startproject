@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 #Importando el modelo dar de alta uno nuevo importando la clase curso
 from AppCoder.models import Curso, Avatar, Alumnos, Profesores
 from django.http import HttpResponse
@@ -111,15 +111,28 @@ def nuevos_alumnos(request):
 def nuevos_profesores(request):
     avatares = Avatar.objects.filter(user=request.user.id)
     if request.method == "POST":
-
-        formulario_prof = Profesores_formulario( request.POST )
+        formulario_prof = Profesores_formulario(request.POST)
         if formulario_prof.is_valid():
             datos = formulario_prof.cleaned_data
-            curso = Profesores( nombre_profesor= datos["nombre_profesor"], curso_impartido = datos["curso_impartido"])
-            curso.save()
-            return render(request , "nuevos_profesores.html")
-        
-    return render(request , "nuevos_profesores.html", {"url":avatares[0].imagen.url,})
+            Profesores.objects.create(nombre_profesor=datos["nombre_profesor"], curso_impartido=datos["curso_impartido"])
+            return redirect('profesores')  # Redirige para evitar doble post
+    return render(request, "nuevos_profesores.html", {"url":avatares[0].imagen.url})
+
+#ELIMINAR PROFESOR
+def eliminar_profesor(request, id):
+    Profesores.objects.filter(id=id).delete()
+    return redirect('profesores')  # Redirige para actualizar la lista y evitar doble post
+
+
+#EDITAR PROFESOR CAMBIAR
+def editar_profesor(request, id):
+    profesor = Profesores.objects.get(id=id)
+    if request.method == "POST":
+        # Aquí iría tu lógica para procesar el formulario de edición
+        return redirect('profesores')  # Redirige a la lista de profesores después de editar
+    else:
+        # Aquí renderizas el formulario de edición con los datos del profesor
+        return render(request, "editar_profesor.html", {"profesor": profesor})
 
 #ELIMNAR CURSO
 def eliminar_curso(request,id):

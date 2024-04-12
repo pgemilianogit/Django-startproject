@@ -1,0 +1,18 @@
+{% extends "padre.html" %}
+{% block contenido %}
+<main class="container">
+    <h1 class="text-xl-center title">Editar Profesor</h1>
+    <form action="{% url 'editar_profesor' profesor.id %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="nombre_profesor">Nombre del Profesor:</label>
+            <input type="text" class="form-control" id="nombre_profesor" name="nombre_profesor" value="{{ profesor.nombre_profesor }}">
+        </div>
+        <div class="form-group">
+            <label for="curso_impartido">Curso Impartido:</label>
+            <input type="text" class="form-control" id="curso_impartido" name="curso_impartido" value="{{ profesor.curso_impartido }}">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    </form>
+</main>
+{% endblock %}

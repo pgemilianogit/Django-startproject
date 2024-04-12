@@ -21,10 +21,11 @@ class Curso(models.Model):
 class Alumnos(models.Model):
     nombre_alumno=models.CharField(max_length=40)
     curso_inscrito=models.IntegerField()
-    
+
+# Si el curso_impartido es una relación con otro modelo, usar un ForeignKey en lugar de un IntegerField.
 class Profesores(models.Model):
     nombre_profesor=models.CharField(max_length=40)
-    curso_impartido=models.IntegerField()
+    curso_impartido=models.ForeignKey(Curso, on_delete=models.CASCADE)
     
     
 class Avatar(models.Model):
