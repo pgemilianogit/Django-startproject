@@ -3,186 +3,40 @@
 {% load static %}
 
 {% block contenido %}
-    <main>
-        <div class="Conteiner">
-            <div class="row">
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'AppCoder/assets/img/Profesores/Ana.jpg' %}" class="card-img-top" alt="Foto de Ana Martínez García" style="width: 250px; height: auto;">
-                        <div class="card-body">
-                            <h5 class="card-title mb-0">Ana Martínez García</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Sistemas</p>
-                            <p class="card-text"><b>Curso:</b> Desarrollo de Aplicaciones Móviles</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
+        <main class="Conteiner">
+            <h1 class ="text-xl-center title">Profesores</h1>
+            <a href="profesores"class="btn btn-primary btn-sm">Curso Impartido</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Nombre Profesor</th>
+                        <th>Curso Impartido</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for n in profesores %}
+                    <tr>
+                        <th scope="row">{{n.id}}</th>
+                        <td>{{n.nombre_profesor}}</td>
+                        <td>{{n.curso_impartido}}</td>
+                        {% if request.user.is_authenticated %}
+                        <td><a href="{% url 'eliminar_curso' n.id %}"class="btn btn-danger" >Eliminar</a></td>
+                        <td><a href="{% url 'editar_curso' n.id %}" class="btn btn-warning" >Editar</a></td>
+                        {% endif %}
 
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/ian.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title mb-0">Javier López Pérez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniero en Electrónica</p>
-                            <p class="card-text">Curso: Diseño de circuitos electrónicos</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/ivan.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title mb-0">David Sánchez Gutiérrez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniero en Telecomunicaciones</p>
-                            <p class="card-text"><b>Curso:</b> Redes de Comunicaciones</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/juan.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Carlos Rodríguez Sánchez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniero en Software</p>
-                            <p class="card-text"><b>Curso:</b> Desarrollo Web Avanzado</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/karen.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Laura Pérez Martínez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Telecomunicaciones</p>
-                            <p class="card-text"><b>Curso:</b> Machine Learning y Python</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/karla.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Sofía García Rodríguez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Robótica</p>
-                            <p class="card-text"><b>Curso:</b> Programación de Robots con ROS</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/karol.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">María Gutiérrez Fernández</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Nanotecnología</p>
-                            <p class="card-text"><b>Curso:</b> Diseño y Fabricación de Nanomateriales</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/maria.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Juana Fernández Díaz</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Ciberseguridad</p>
-                            <p class="card-text"><b>Curso:</b> Hacking Ético y Seguridad Informática</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/Marta.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Andrea Díaz Ruiz</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Realidad Virtual</p>
-                            <p class="card-text"><b>Curso:</b> Creación de Experiencias de Realidad Virtual</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/moy.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Alejandro Torres González</h5>
-                            <p class="card-text text-muted mb-2">Ingeniero en Sistemas Embebidosl</p>
-                            <p class="card-text"><b>Curso:</b> Diseño de Sistemas Embebidos con Arduino</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/paco.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Samuel Ruiz López</h5>
-                            <p class="card-text text-muted mb-2">Ingeniero en Biomedicina</p>
-                            <p class="card-text"><b>Curso:</b> Bioinformática y Genómica</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/pepe.jpg' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Daniel González Ramírez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniero en Energías Renovables</p>
-                            <p class="card-text"><b>Curso:</b> Energías Renovables y Sostenibilidad</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-10 col-md-3">
-                    <div class="card">
-                        <img src="{% static 'C:/Users/panfu/Music/Curso Python CoderHouse/Clase18/AppCoder/static/AppCoder/assets/img/Profesores/pineda.png' %}"/>
-                        <div class="card-body">
-                            <h5 class="card-title">Elena Ramírez Martínez</h5>
-                            <p class="card-text text-muted mb-2">Ingeniera en Internet de las Cosas</p>
-                            <p class="card-text"><b>Curso:</b> Desarrollo de Aplicaciones IoT (Internet de las Cosas)</p>
-                            <a class="btn btn-danger" href="">Enviar Mensaje</a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </main>
         <!-- ------------------ CRUD PROFESORES ------------------ -->
+        <th scope="row">{{n.id}}</th>
+        <td>{{n.nombre_profesor}}</td>
+        <td>{{n.curso_impartido}}</td>
         <h1 class="text-xl-center title">Profesores</h1>
         <a href="{% url 'AgregarProfesor' %}" class="btn btn-warning">Agregar Profesor</a>
-        <div class="row mt-3">
-            {% for profesor in profesores %}
-            <div class="col-12 col-md-6 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ profesor.nombre_profesor }}</h5>
-                        <p class="card-text"><strong>Curso Impartido:</strong> {{ profesor.curso_impartido }}</p>
-                        <div class="d-flex justify-content-between">
-                            <a href="{% url 'editar_profesor' profesor.id %}" class="btn btn-warning">Editar</a>
-                            <a href="{% url 'eliminar_profesor' profesor.id %}" class="btn btn-danger">Eliminar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+        <a href="{% url 'BajaProfesor' n.id %}" class="btn btn-warning">Borrar   Profesor</a>
         </div>
     
     

@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required   #views que se pueda 
 def inicio(request):
     return render(request, "padre.html")
 
+# <---------------------------------- CRUD CURSOS ---------------------------------->
 
 def alta_curso(request, nombre):
     #contructor de la clase, un objeto mas lo que hereda
@@ -34,31 +35,12 @@ def ver_cursos(request):
     avatares = Avatar.objects.filter(user=request.user.id)
     return render(request, "cursos.html", {"url":avatares[0].imagen.url, "cursos":cursos})
 
-    """dicc ={"cursos": cursos}
+"""dicc ={"cursos": cursos}
     plantilla = loader.get_template("cursos.html")
     #Loader simpl todo el problema de como entrar al template, donde ya definimos
     documento=plantilla.render(dicc)
     return HttpResponse(documento)"""
     
-
-#PROCESO:
-
-#crear un diccionario con una sola propiedad (cursos) y el valor sera el conjunto de dicc
-#teniendo todos los cursos cargar la plantilla  get_template metodo del motor de plantillas apuntando en settings
-#render de la plantilla mandando el diccionario, pasa todo dinamismo, retorna todos los cursos
-
-#ALUMNOS
-def alumnos(request):
-    avatares = Avatar.objects.filter(user=request.user.id)
-    return render(request, "alumnos.html", {"url":avatares[0].imagen.url,})
-
-
-#PROFESORES
-def profesores(request):
-    avatares = Avatar.objects.filter(user=request.user.id)
-    return render(request, "profesores.html", {"url":avatares[0].imagen.url,})
-
-
 #DAR DE ALTA UN CURSO  OCUPO ESTOOOOOOOOOOO
 def curso_formulario(request):
     avatares = Avatar.objects.filter(user=request.user.id)
@@ -91,6 +73,64 @@ def buscar(request):
         return HttpResponse("Ingrese el nombre del curso")
     
     
+    
+# <---------------------------------- CRUD PROFESORES ---------------------------------->
+
+#PROFESORES
+def profesores(request):
+    """
+    profesor= Profesores.objects.all()
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "profesores.html", {"url":avatares[0].imagen.url,})"""
+    
+    profes= Profesores.objects.all()
+    dicc={"profesores": profes}
+    plantilla=loader.get_template("profesores.html")
+    documento= plantilla.render(dicc)
+    return HttpResponse(documento)
+
+#ELIMINAR PROFESORES
+def baja_profesor(request, id):
+    profe=Profesores.objects.get(id=id)
+    profe.delete()
+    profe=Profesores.objects.all()
+    return render(request, "profesores.html", {"profesores":profe})
+
+
+#ELIMINAR ALUMNOS
+def baja_alumnos(request, id):
+    alum=Alumnos.objects.get(id=id)
+    alum.delete()
+    alum=Alumnos.objects.all()
+    return render(request, "alumnos.html", {"alums":alum})
+#PROCESO:
+
+#crear un diccionario con una sola propiedad (cursos) y el valor sera el conjunto de dicc
+#teniendo todos los cursos cargar la plantilla  get_template metodo del motor de plantillas apuntando en settings
+#render de la plantilla mandando el diccionario, pasa todo dinamismo, retorna todos los cursos
+
+# <---------------------------------- CRUD ALUMNOS ---------------------------------->
+
+
+#ALUMNOS
+"""def alumnos(request):
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "alumnos.html", {"url":avatares[0].imagen.url,})"""
+
+def alumnos(request):
+    """
+    profesor= Profesores.objects.all()
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "profesores.html", {"url":avatares[0].imagen.url,})"""
+    alum= Alumnos.objects.all()
+    dicc={"alumnos": alum}
+    plantilla=loader.get_template("alumnos.html")
+    documento= plantilla.render(dicc)
+    return HttpResponse(documento)
+
+
+    
+    
 #FORMULARIO DE ALUMNOS
 def nuevos_alumnos(request):
     avatares = Avatar.objects.filter(user=request.user.id)
@@ -118,21 +158,6 @@ def nuevos_profesores(request):
             return redirect('profesores')  # Redirige para evitar doble post
     return render(request, "nuevos_profesores.html", {"url":avatares[0].imagen.url})
 
-#ELIMINAR PROFESOR
-def eliminar_profesor(request, id):
-    Profesores.objects.filter(id=id).delete()
-    return redirect('profesores')  # Redirige para actualizar la lista y evitar doble post
-
-
-#EDITAR PROFESOR CAMBIAR
-def editar_profesor(request, id):
-    profesor = Profesores.objects.get(id=id)
-    if request.method == "POST":
-        # Aquí iría tu lógica para procesar el formulario de edición
-        return redirect('profesores')  # Redirige a la lista de profesores después de editar
-    else:
-        # Aquí renderizas el formulario de edición con los datos del profesor
-        return render(request, "editar_profesor.html", {"profesor": profesor})
 
 #ELIMNAR CURSO
 def eliminar_curso(request,id):
