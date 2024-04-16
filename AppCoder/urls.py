@@ -9,7 +9,7 @@ urlpatterns= [      #name va relacionado con el padre para las direcciones
  #PROFESORES
      path("profesores", views.profesores, name="profesores"),
     path("agregar_profesores", views.nuevos_profesores, name="AgregarProfesor"),
-    path("baja_profesores/<int:id>", views.baja_profesor, name="BajaProfesor"),
+    path("baja_profesores/<int:id>", views.baja_profesor, name="baja_profesores"),
     
 #ALUMNOS
     path("alumnos", views.alumnos , name="alumnos"),
