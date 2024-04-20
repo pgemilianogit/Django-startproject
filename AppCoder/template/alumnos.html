@@ -28,13 +28,13 @@
 </main>
 
 
-        <!-- ------------------ CRUD PROFESORES ------------------ -->
+        <!-- ------------------ CRUD ALUMNOS ------------------ -->
         <th scope="row">{{n.id}}</th>
         <td>{{n.nombre_alumno}}</td>
         <td>{{n.curso_inscrito}}</td>
         <h1 class="text-xl-center title">CRUD ALUMNOS</h1>
         <a href="{% url 'AgregarAlumno' %}" class="btn btn-warning">Agregar Alumno</a>
-        <a href="{% url 'BajaAlumnos' n.id %}" class="btn btn-warning">Borrar Profesor</a>
+        <!-- <a href="{% url 'baja_alumnos' n.id %}" class="btn btn-warning">Borrar Profesor</a> -->
 
 
         {% endblock %}

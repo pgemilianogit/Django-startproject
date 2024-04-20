@@ -5,11 +5,15 @@ from django.contrib.auth.views import LogoutView
 urlpatterns= [      #name va relacionado con el padre para las direcciones
     path("", views.inicio, name="home"),
     path("buscar", views.buscar),
+    path("buscar_alumnos", views.buscar_alumnos, name="BuscarAlumnos"),
+    path("buscar_profesores", views.buscar_profesores, name="BuscarProfesores"),
+
  
  #PROFESORES
-     path("profesores", views.profesores, name="profesores"),
+    path("profesores", views.profesores, name="profesores"),
     path("agregar_profesores", views.nuevos_profesores, name="AgregarProfesor"),
     path("baja_profesores/<int:id>", views.baja_profesor, name="baja_profesores"),
+    path("editar_profesor/<int:id>", views.editar_profesor, name= "EditarProfesor"),
     
 #ALUMNOS
     path("alumnos", views.alumnos , name="alumnos"),

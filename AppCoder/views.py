@@ -77,19 +77,58 @@ def buscar(request):
 # <---------------------------------- CRUD PROFESORES ---------------------------------->
 
 #PROFESORES
+@login_required
 def profesores(request):
-    """
-    profesor= Profesores.objects.all()
-    avatares = Avatar.objects.filter(user=request.user.id)
-    return render(request, "profesores.html", {"url":avatares[0].imagen.url,})"""
-    
-    profes= Profesores.objects.all()
-    dicc={"profesores": profes}
-    plantilla=loader.get_template("profesores.html")
-    documento= plantilla.render(dicc)
-    return HttpResponse(documento)
+
+    profes = Profesores.objects.all()
+    avatares = Avatar.objects.filter(user=request.user)
+    avatar_url = avatares[0].imagen.url if avatares.exists() else None
+    cursos = Curso.objects.all()    
+    context = {
+        "profesores": profes,
+        "url": avatar_url,
+        "cursos": cursos
+    }
+
+    return render(request, "profesores.html", context)
+
+    #EDITAR PROFESOR
+
+@login_required
+def editar_profesor(request, id):
+
+
+    profesor = Profesores.objects.get(id=id)  # Obtiene el profesor por su ID
+    if request.method == "POST":
+        formulario = Profesores_formulario(request.POST)
+        if formulario.is_valid():
+            datos = formulario.cleaned_data
+            profesor.nombre_profesor = datos['nombre_profesor']
+            profesor.curso_impartido = datos['curso_impartido']
+            profesor.save()
+            return redirect('profesores')  # Redirige a la vista de profesores
+    else:
+        # Inicializa el formulario con los datos del profesor existente
+        datos_iniciales = {
+            'nombre_profesor': profesor.nombre_profesor,
+            'curso_impartido': profesor.curso_impartido
+        }
+        formulario = Profesores_formulario(initial=datos_iniciales)
+
+    return render(request, "editar_profesor.html", {"formulario": formulario, "profesor": profesor})
+
+#BUSCAR PROFESOR
+@login_required
+def buscar_profesores(request):
+    if 'nombre_profesor' in request.GET:
+        nombre_profesor = request.GET["nombre_profesor"]
+        profesores = Profesores.objects.filter(nombre_profesor__icontains=nombre_profesor)
+        return render(request, "resultado_busqueda_profesores.html", {"profesores": profesores})
+    else:
+        return HttpResponse("Ingrese el nombre del profesor")
 
 #ELIMINAR PROFESORES
+@login_required
 def baja_profesor(request, id):
     profe=Profesores.objects.get(id=id)
     profe.delete()
@@ -103,6 +142,7 @@ def baja_alumnos(request, id):
     alum.delete()
     alum=Alumnos.objects.all()
     return render(request, "alumnos.html", {"alums":alum})
+
 #PROCESO:
 
 #crear un diccionario con una sola propiedad (cursos) y el valor sera el conjunto de dicc
@@ -117,6 +157,16 @@ def baja_alumnos(request, id):
     avatares = Avatar.objects.filter(user=request.user.id)
     return render(request, "alumnos.html", {"url":avatares[0].imagen.url,})"""
 
+#BUSCAR ALUMNOS
+def buscar_alumnos(request):
+    if request.GET["nombre"]:
+        nombre = request.GET["nombre"]
+        profe = Alumnos.objects.filter(nombre__icontains= nombre)
+        return render( request , "resultado_busqueda.html" , {"profe":profe})
+    else:
+        return HttpResponse("Ingrese el nombre del curso")
+    
+@login_required
 def alumnos(request):
     """
     profesor= Profesores.objects.all()
@@ -148,6 +198,7 @@ def nuevos_alumnos(request):
 
 
 #FORMULARIO DE PROFESORES
+@login_required
 def nuevos_profesores(request):
     avatares = Avatar.objects.filter(user=request.user.id)
     if request.method == "POST":

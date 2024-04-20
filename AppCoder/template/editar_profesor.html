@@ -1,0 +1,16 @@
+{% extends 'padre.html' %}
+{% load static %}
+{% block contenido %}
+
+<form method="POST">
+    {% csrf_token %}
+    <label for="nombre_profesor">Nombre del Profesor:</label>
+    {{ formulario.nombre_profesor }}
+
+    <label for="curso_impartido">ID del Curso Impartido:</label>
+    {{ formulario.curso_impartido }}
+
+    <button type="submit">Actualizar Profesor</button>
+</form>
+
+{% endblock %}

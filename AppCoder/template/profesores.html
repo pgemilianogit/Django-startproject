@@ -3,43 +3,37 @@
 {% load static %}
 
 {% block contenido %}
-        <main class="Conteiner">
-            <h1 class ="text-xl-center title">Profesores</h1>
-            <a href="profesores"class="btn btn-primary btn-sm">Curso Impartido</a>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>id</th>
-                        <th>Nombre Profesor</th>
-                        <th>Curso Impartido</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for n in profesores %}
-                    <tr>
-                        <th scope="row">{{n.id}}</th>
-                        <td>{{n.nombre_profesor}}</td>
-                        <td>{{n.curso_impartido}}</td>
-                        {% if request.user.is_authenticated %}
-                        <td><a href="{% url 'eliminar_curso' n.id %}"class="btn btn-danger" >Eliminar</a></td>
-                        <td><a href="{% url 'editar_curso' n.id %}" class="btn btn-warning" >Editar</a></td>
-                        {% endif %}
+    <main class="Conteiner">
+        <h1 class ="text-xl-center title">Profesores</h1>
+        <a href="{% url 'AgregarProfesor' %}" class="btn btn-primary btn-sm" >Agregar Profesor</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nombre Profesor</th>
+                    <th>Curso Impartido</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in profesores %}
+                <tr>
+                    <th scope="row">{{n.id}}</th>
+                    <td>{{n.nombre_profesor}}</td>
+                    <td>{{n.curso_impartido}}</td>
+                    {% if request.user.is_authenticated %}
+                    <td><a href="{% url 'baja_profesores' n.id %}" class="btn btn-danger">Eliminar</a></td>
+                    <td><a href="{% url 'EditarProfesor' n.id %}" class="btn btn-warning">Editar</a></td>
 
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </main>
-        <!-- ------------------ CRUD PROFESORES ------------------ -->
-        <th scope="row">{{n.id}}</th>
-        <td>{{n.nombre_profesor}}</td>
-        <td>{{n.curso_impartido}}</td>
-        <h1 class="text-xl-center title">Profesores</h1>
-        <a href="{% url 'AgregarProfesor' %}" class="btn btn-warning">Agregar Profesor</a>
-        <a href="{% url 'baja_profesores' n.id %}" class="btn btn-warning">Borrar Profesor</a>
-        </div>
+                    {% endif %}
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</main>
     
     
 
 
 {% endblock %}
+
