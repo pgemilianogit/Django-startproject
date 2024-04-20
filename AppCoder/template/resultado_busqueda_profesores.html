@@ -1,14 +1,15 @@
 {% extends 'padre.html' %}
 
-{% load static %}
+{% load static %} 
 
-{% block contenido %}
+{% block contenido %} 
 
     {% if profesores %}
         <ul>
         {% for profe in profesores %}
-            <li>Nombre: {{ profe.nombre_profesor }}</li>
-            <li>ID curso: {{ profe.curso_impartido }}</li>
+            <li>Nombre: {{ nombre.nombre_profesor }}</li>
+            <li>ID curso: {{ curso.curso_impartido }}</li>
+
         {% endfor %}
         </ul>
     {% else %}

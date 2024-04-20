@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect, get_object_or_404
 #Importando el modelo dar de alta uno nuevo importando la clase curso
 from AppCoder.models import Curso, Avatar, Alumnos, Profesores
 from django.http import HttpResponse
@@ -14,7 +14,8 @@ from django.contrib.auth.decorators import login_required   #views que se pueda 
 
 #Responder en la platilla renderizada
 def inicio(request):
-    return render(request, "padre.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    return render(request, "padre.html",{"url":avatares[0].imagen.url})
 
 # <---------------------------------- CRUD CURSOS ---------------------------------->
 
@@ -127,6 +128,7 @@ def buscar_profesores(request):
     else:
         return HttpResponse("Ingrese el nombre del profesor")
 
+
 #ELIMINAR PROFESORES
 @login_required
 def baja_profesor(request, id):
@@ -137,11 +139,13 @@ def baja_profesor(request, id):
 
 
 #ELIMINAR ALUMNOS
+@login_required
 def baja_alumnos(request, id):
-    alum=Alumnos.objects.get(id=id)
+    alum = Alumnos.objects.get(id=id)
     alum.delete()
-    alum=Alumnos.objects.all()
-    return render(request, "alumnos.html", {"alums":alum})
+    alum=Profesores.objects.all()
+    return render(request, "alumnos.html", {"alumnos":alum})
+
 
 #PROCESO:
 
@@ -162,22 +166,39 @@ def buscar_alumnos(request):
     if request.GET["nombre"]:
         nombre = request.GET["nombre"]
         profe = Alumnos.objects.filter(nombre__icontains= nombre)
-        return render( request , "resultado_busqueda.html" , {"profe":profe})
+        return render( request , "resultado_busqueda_alumnos.html" , {"profe":profe})
     else:
         return HttpResponse("Ingrese el nombre del curso")
     
 @login_required
 def alumnos(request):
-    """
-    profesor= Profesores.objects.all()
+    alumnos = Alumnos.objects.all()
     avatares = Avatar.objects.filter(user=request.user.id)
-    return render(request, "profesores.html", {"url":avatares[0].imagen.url,})"""
-    alum= Alumnos.objects.all()
-    dicc={"alumnos": alum}
-    plantilla=loader.get_template("alumnos.html")
-    documento= plantilla.render(dicc)
-    return HttpResponse(documento)
+    context = {"alumnos": alumnos, "url": avatares[0].imagen.url if avatares else None}
+    return render(request, "alumnos.html", context)
 
+
+def editar_alumno(request, id):
+    # Utiliza get_object_or_404 para manejar casos donde el alumno no existe
+    alumno = get_object_or_404(Alumnos, id=id)
+    
+    if request.method == "POST":
+        formulario = Alumnos_formulario(request.POST)
+        if formulario.is_valid():
+            datos = formulario.cleaned_data
+            alumno.nombre_alumno = datos['nombre_alumno']
+            alumno.curso_inscrito = datos['curso_inscrito']
+            alumno.save()
+            return redirect('alumnos')  # Redirige a la vista de alumnos
+    else:
+        # Inicializa el formulario con los datos del alumno existente
+        datos_iniciales = {
+            'nombre_alumno': alumno.nombre_alumno,
+            'curso_inscrito': alumno.curso_inscrito
+        }
+        formulario = Alumnos_formulario(initial=datos_iniciales)
+
+    return render(request, "editar_alumno.html", {"formulario": formulario, "alumno": alumno})
 
     
     

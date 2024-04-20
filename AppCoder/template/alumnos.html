@@ -3,38 +3,33 @@
 {% load static %}
 
 {% block contenido %}
-<main class="Conteiner">
-    <h1 class ="text-xl-center title">Alumnos</h1>
-    <a href="alumnos"class="btn btn-primary btn-sm">Agregar Alumno</a>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>id</th>
-                <th>Nombre Alumno</th>
-                <th>Curso Inscrito</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for n in alumnos %}
-            <tr>
-                <th scope="row">{{n.id}}</th>
-                <td>{{n.nombre_alumno}}</td>
-                <td>{{n.curso_inscrito}}</td>
+    <main class="container">
+        <h1 class="text-xl-center title">Alumnos</h1>
+        <a href="{% url 'AgregarAlumno' %}" class="btn btn-primary">Agregar Alumno</a>
+        <a href="{% url 'BuscarAlumnos' %}" class="btn btn-primary">Buscar Alumno</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nombre Alumno</th>
+                    <th>Curso Inscrito</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for n in alumnos %}
+                <tr>
+                    <th scope="row">{{ n.id }}</th>
+                    <td>{{ n.nombre_alumno }}</td>
+                    <td>{{ n.curso_inscrito }}</td>
+                    {% if request.user.is_authenticated %}
+                    <td><a href="{% url 'BajaAlumnos' n.id %}" class="btn btn-danger">Eliminar</a></td>
+                    <td><a href="{% url 'EditarAlumno' n.id %}" class="btn btn-warning">Editar</a></td>
 
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</main>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
 
-
-        <!-- ------------------ CRUD ALUMNOS ------------------ -->
-        <th scope="row">{{n.id}}</th>
-        <td>{{n.nombre_alumno}}</td>
-        <td>{{n.curso_inscrito}}</td>
-        <h1 class="text-xl-center title">CRUD ALUMNOS</h1>
-        <a href="{% url 'AgregarAlumno' %}" class="btn btn-warning">Agregar Alumno</a>
-        <!-- <a href="{% url 'baja_alumnos' n.id %}" class="btn btn-warning">Borrar Profesor</a> -->
-
-
-        {% endblock %}
+{% endblock %}

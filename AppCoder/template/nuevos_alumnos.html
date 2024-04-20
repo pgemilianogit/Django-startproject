@@ -2,7 +2,7 @@
 {% load static %} 
 {% block contenido %} 
 
-    <form action="agregar_estudiante" method="POST">
+    <form action="agregar_alumno" method="POST">
         {% csrf_token %}
         <p>Nombre del Alumno:</p>
         <input type="text" name="nombre_alumno" required>
